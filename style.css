@@ -1,0 +1,566 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "GMarketSans";
+    font-weight: 300;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+@font-face {
+    font-family: 'GMarketSans';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'GMarketSans';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: 500;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'GMarketSans';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+    font-weight: 700;
+    font-display: swap;
+}
+
+.section-header {
+    display: flex;              /* 가로 정렬의 핵심 */
+    justify-content: space-between; /* 양쪽 끝으로 배치 (필요하면 flex-start로 변경) */
+    align-items: center;        /* 세로 중앙 정렬 */
+    margin-bottom: 10px;
+    width: 100%;                /* 너비 꽉 채우기 */
+}
+
+.section-header h3 {
+    margin: 0;                  /* 제목의 기본 여백 제거 (중요) */
+    font-size: 1em;
+    color: #2c3e50;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 400px;
+    background-color: #ffffff;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.sidebar.hidden {
+    transform: translateX(-100%);
+}
+
+.sidebar-header {
+    padding: 20px;
+    background-color: #5380e9;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.sidebar-header h2 {
+    font-size: 1.5em;
+    font-weight: 500;
+    margin: 0;
+}
+
+.toggle-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.toggle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar.hidden .toggle-btn {
+    transform: rotate(180deg);
+}
+
+.sidebar-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+.search-section {
+    padding: 15px 20px;
+    border-bottom: 2px solid #e0e0e0;
+    background-color: #f8f9fa;
+}
+
+.search-section h3 {
+    font-size: 1em;
+    font-weight: 500;
+    color: #5380e9;
+    margin-bottom: 10px;
+}
+
+.region-select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: "GMarketSans";
+    font-weight: 300;
+    font-size: 0.9em;
+    background-color: white;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.region-select:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.island-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.island-list-header h4 {
+    margin: 0;
+    font-weight: 500;
+    font-size: 0.9em;
+    color: #5380e9;
+}
+
+.toggle-list-btn {
+    background: none;
+    border: 1px solid #ddd;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: "GMarketSans";
+    font-size: 0.8em;
+    cursor: pointer;
+    color: #555;
+    transition: all 0.2s;
+}
+
+.toggle-list-btn:hover {
+    background-color: #f0f0f0;
+    border-color: #3498db;
+}
+
+.island-list {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 5px;
+}
+
+.island-list-item {
+    padding: 8px 12px;
+    margin-bottom: 5px;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.island-list-item:hover {
+    background-color: #e3f2fd;
+    border-color: #3498db;
+}
+
+.island-list-item.selected {
+    background-color: #3498db;
+    color: white;
+    border-color: #2980b9;
+}
+
+.island-list-item .island-name {
+    font-weight: 500;
+    margin-bottom: 3px;
+}
+
+.island-list-item .island-address {
+    font-size: 0.85em;
+    color: #666;
+}
+
+.island-list-item.selected .island-address {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.sidebar-content {
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.placeholder {
+    color: #999;
+    text-align: center;
+    padding: 40px 20px;
+    font-style: italic;
+}
+
+.island-detail {
+    margin-bottom: 20px;
+}
+
+.island-detail h3 {
+    color: #5380e9;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #5380e9;
+    font-size: 1.3em;
+}
+
+.info-row {
+    margin-bottom: 12px;
+    padding: 8px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+.info-row.horizontal {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.info-row.horizontal > div {
+    flex: 1;
+}
+
+.info-label {
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 4px;
+    font-size: 0.9em;
+}
+
+.info-value {
+    color: #333;
+    font-size: 1em;
+}
+
+.info-value.empty {
+    color: #999;
+    font-style: italic;
+}
+
+/* Map Container */
+.map-container {
+    flex: 1;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    transition: margin-left 0.3s ease;
+}
+
+.sidebar-toggle-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    background-color: #5380e9;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 1.2em;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s;
+}
+
+.sidebar-toggle-btn:hover {
+    background-color: #34495e;
+}
+
+.sidebar-toggle-btn.hidden {
+    display: none;
+}
+
+.territorial-btn{
+    padding: 6px 15px;
+    font-family: "GmarketSans";
+    border: 2px solid #ddd;
+    background-color: white;
+    color: #5380e9;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.territorial-btn:hover {
+    background-color: #f0f0f0;
+    border-color: #3498db;
+}
+
+.territorial-btn.active {
+    background-color: #5380e9;
+    color: white;
+    border-color: #5380e9;
+}
+
+/* Map Controls */
+.map-controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    min-width: 200px;
+}
+
+/* ▼▼▼ 커스텀 줌 버튼 스타일 수정 ▼▼▼ */
+.custom-zoom-controls {
+    display: flex;
+    flex-direction: row;
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
+    margin-bottom: 10px; 
+    text-decoration-line: none;
+}
+
+.custom-zoom-controls a {
+    font-weight: 500;
+    background-color: white !important;
+    color: #333 !important;
+    width: 25px ;
+    height: 25px ;
+    line-height: 25px !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    display: block !important;
+    cursor: pointer !important;
+}
+.custom-zoom-controls a:hover {
+    background-color: #f0f0f0 !important;
+}
+.custom-zoom-controls a:last-child {
+    border-bottom: none !important;
+}
+/* '전체' 버튼 폰트 스타일 */
+#custom-zoom-korea {
+    background-image: url("mini.png");
+    background-repeat: no-repeat;
+    width: 25px;
+    background-size: contain;
+    background-position: center;
+    text-indent: -9999px; 
+    overflow: hidden;
+}
+/* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
+
+.map-controls h3 {
+    margin: 0 0 10px 0;
+    font-size: 1em;
+    color: #5380e9;
+    font-weight: 500;
+}
+
+.style-buttons {
+    font-family: "GMarketSans";
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.style-btn {
+    font-family: "GMarketSans";
+    padding: 8px 15px;
+    border: 2px solid #ddd;
+    background-color: white;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.style-btn:hover {
+    background-color: #f0f0f0;
+    border-color: #3498db;
+}
+
+.style-btn.active {
+    background-color: #5380e9;
+    color: white;
+    border-color: #5380e9;
+}
+
+/* Leaflet Popup Customization */
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+}
+
+.leaflet-popup-content {
+    margin: 15px;
+    font-size: 0.9em;
+}
+
+/* Tooltip Customization */
+.leaflet-tooltip {
+    font-family: "GMarketSans";
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 0.85em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip-title {
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 5px;
+    font-size: 1em;
+}
+
+.tooltip-info {
+    margin: 3px 0;
+    color: #555;
+}
+
+.tooltip-info strong {
+    color: #333;
+}
+
+/* Region highlight polygon */
+.region-highlight-polygon {
+    pointer-events: none;
+    z-index: 100;
+}
+
+.region-highlight-polygon path {
+    stroke: #ffffff !important;
+    stroke-width: 1px !important;
+    stroke-linejoin: round !important;
+    filter: drop-shadow(0 0 2px #ffffff) drop-shadow(0 0 5px #ffffff) drop-shadow(0 0 10px #ffffff) drop-shadow(0 0 15px #ffffff);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: 50vh;
+        bottom: 0;
+        top: auto;
+        left: 0;
+        transform: translateY(100%);
+    }
+
+    .sidebar.hidden {
+        transform: translateY(100%);
+    }
+
+    .map-container {
+        margin-left: 0 !important;
+    }
+
+    .map-controls {
+        font-weight: 500;
+        top: 10px;
+        right: 10px;
+        padding: 10px;
+    }
+
+    .style-buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .style-btn {
+        flex: 1;
+        min-width: 80px;
+        text-align: center;
+        font-size: 0.8em;
+        padding: 8px 10px;
+    }
+}
+
+/* --- 클러스터 아이콘 색상 커스텀 --- */
+
+/* 1. 작은 클러스터 */
+.marker-cluster-small {
+    background-color: rgba(79, 184, 254, 0) !important; 
+    box-shadow: 0 0 15px 5px rgba(101, 199, 255, 0.5);
+    border-radius: 50%;
+}
+.marker-cluster-small div {
+    background-color: rgba(88, 149, 255, 0.8) !important; /* 안쪽 진한 원 */
+    color: white !important; /* 글자색 */
+}
+
+/* 2. 중간 클러스터 */
+.marker-cluster-medium {
+    background-color: rgba(84, 118, 243, 0) !important;
+    box-shadow: 0 0 15px 5px rgba(77, 151, 255, 0.5);
+    border-radius: 50%;
+}
+.marker-cluster-medium div {
+    background-color: rgba(54, 61, 255, 0.8) !important;
+    color: white !important;
+}
+
+/* 3. 큰 클러스터 (개수 많음) */
+.marker-cluster-large {
+    background-color: rgba(207, 207, 208, 0) !important;
+    box-shadow: 0 0 15px 5px rgba(207, 207, 208, 0.5);
+    border-radius: 50%;
+}
+.marker-cluster-large div {
+    background-color: rgba(32, 32, 32, 0.8) !important;
+    color: white !important;
+}
+
+/* (선택) 클러스터 글자 폰트 설정 */
+.marker-cluster div {
+    font-family: "GMarketSans";
+    font-weight: 500;
+}
+
+.select-wrapper {
+    display: flex;
+    gap: 8px; /* 두 선택창 사이 간격 */
+    width: 100%;
+}
